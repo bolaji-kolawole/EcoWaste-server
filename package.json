@@ -1,0 +1,38 @@
+{
+  "name": "ecowaste_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "watch": "npx npm-watch dev",
+    "start": "node dist/index.js",
+    "dev": "npx ts-node src/index.ts",
+    "migrate": "npx ts-node src/migrate.ts",
+    "update": "npx -y npm-check-updates -u",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "watch": {
+    "dev": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,html,scss",
+      "quiet": false
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "barmoury": "^1.0.71",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.4",
+    "mysql2": "^3.16.3",
+    "nodemailer": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^7.0.11"
+  }
+}

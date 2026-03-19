@@ -1,0 +1,40 @@
+
+export enum Status {
+    ACTIVE = "ACTIVE",
+    DELETED = "DELETED",
+    IN_ACTIVE = "IN_ACTIVE",
+    DEACTIVATED = "DEACTIVATED",
+    ACTIVE_AND_LIVE = "ACTIVE_AND_LIVE",
+    PENDING_APPROVAL = "PENDING_APPROVAL",
+}
+
+export enum PaymentStatus {
+  PENDING = "PENDING",
+  PROCESSING = "PROCESSING",
+  SUCCESSFUL = "SUCCESSFUL",
+  FAILED = "FAILED",
+  CANCELLED = "CANCELLED",
+  REFUNDED = "REFUNDED",
+  EXPIRED = "EXPIRED"
+}
+
+export enum Currency {
+  NGN = "NGN",
+  USD = "USD",
+  EUR = "EUR",
+  GBP = "GBP"
+}
+
+export enum WasteRequestStatus {
+  PENDING = "PENDING",
+  ASSIGNED = "ASSIGNED",
+  ACCEPTED = "ACCEPTED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+}
+
+export enum RewardType {
+  EARNED = "EARNED",
+  REDEEMED = "REDEEMED"
+}
