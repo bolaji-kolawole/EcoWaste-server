@@ -1,8 +1,8 @@
 
 import logger from "./LoggerImpl";
 import { CallBack } from "barmoury/util";
+
 const { Sequelize } = require('sequelize');
-import registerAssociations from "../model/Association";
 
 export interface DatabaseCredential {
     host: string;
@@ -29,7 +29,6 @@ export class DatabaseConfig {
         });
         this.logger.info(`[ecowaste.${DatabaseConfig.name}] ` +
             `Setting up database connection. ${cred.host}@${cred.username} ${cred.schema}`);
-
     }
 
     async connected(): Promise<boolean> {
@@ -65,9 +64,4 @@ const databaseCredential: DatabaseCredential = {
 }
 
 const database = new DatabaseConfig(logger, databaseCredential);
-
-// ✅ Register associations AFTER the instance exists
-// registerAssociations();
-
 export default database;
-

@@ -1,49 +1,26 @@
+
 import fs from "fs";
 import path from "path";
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as dotenv from "dotenv"; dotenv.config();
+import database from './config/DatabaseConfig';
 
-import database from "./config/DatabaseConfig";
-import registerAssociations from "./model/Association";
-
-(async () => {
-
-    const connected = await database.connected();
-
+// TODO accept options for specific table migration, alter e.t.c. and use non .sync, generate migration and run
+database.connected().then(async connected => {
     if (!connected) {
-        console.error(`[ecowaste.migrate] unable to connect to the database`);
+        console.error(`[ecowaste.migrate]`, `unable to connect to the database, shutting down!`);
         process.exit(1);
     }
-
-    console.log(`[ecowaste.migrate] preparing for the database migration`);
-
-    const modelsPath = path.join(__dirname, "model");
-
-    fs.readdirSync(modelsPath)
-        .filter((file) => {
-            return (
-                file.indexOf(".") !== 0 &&
-                (file.endsWith(".ts") || file.endsWith(".js")) &&
-                !file.includes("Association")
-            );
-        })
-        .forEach((file) => {
-
-            const filePath = path.join(modelsPath, file);
-
-            console.log(
-                `[ecowaste.migrate] preparing to migrate the table ${file}`
-            );
-
+    console.log(`[ecowaste.migrate]`, `preparing for the database migration`);
+    const db: any = {};
+    const models = path.join(__dirname, 'model');
+    fs.readdirSync(models)
+        .filter(function (file) {
+            return (file.indexOf('.') !== 0) && (file.slice(-3) === '.ts' || file.slice(-3) === '.js');
+        }).forEach(function (file) {
+            const model = require(path.join(models, file));
+            console.log(`[ecowaste.migrate]`, `preparing to migrate the table ${path.join(models, file)}`);
+            db[model.name] = model;
         });
-
-    // Register relationships
-    registerAssociations();
-
-    console.log(`[ecowaste.migrate] running sequelize sync`);
-
     await database.migrate({ alter: true });
-
-    console.log(`[ecowaste.migrate] database migration completed successfully`);
-
-})();
+    console.log(`[ecowaste.migrate]`, `database migration completed successfully`);
+});

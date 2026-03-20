@@ -3,7 +3,6 @@ import database from "../config/DatabaseConfig";
 import { Model, Request as BarmouryRequest, ModelInput, ModelAttributes } from "barmoury/api";
 import { ColumnExists, Required, ColumnUnique } from "barmoury/validation";
 import { RequestParamFilter } from "barmoury/eloquent";
-import User from "./User";
 
 export interface AddressAttributes extends ModelAttributes {
   userId: string;
