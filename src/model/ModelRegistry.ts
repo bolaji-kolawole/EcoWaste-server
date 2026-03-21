@@ -19,6 +19,7 @@ import RewardTransaction, { RewardTransactionRequest} from "./RewardTransaction"
 import StreetCluster, { StreetClusterRequest } from "./StreetCluster";
 import NotificationLog, { NotificationLogRequest } from "./NotificationLog";
 import Report, { ReportRequest } from "./Report";
+import PublicReport, { PublicReportRequest } from "./PublicReport";
 
 export const MODEL_REGISTRY: Record<string, any> = {
   users: {
@@ -67,6 +68,12 @@ export const MODEL_REGISTRY: Record<string, any> = {
   reports: {
     model: Report,
     request: ReportRequest
+  },
+
+
+  public_reports: {
+    model: PublicReport,
+    request: PublicReportRequest
   },
 
   user_roles: {

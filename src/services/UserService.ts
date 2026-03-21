@@ -15,16 +15,16 @@ export class UserService {
         if (!bcrypt.compareSync(password!, user!.password)) {
             throw new UnauthorisedError('Invalid login details');
         }
-        const userRole = await UserRole.findOne({ where: { userId: user?.externalId, roleId: roleId } });
-        
-        if (!userRole) {
-            throw new UnauthorisedError('You do not have access to this');
-        }
         if (!user?.emailVerified) {
             throw new UnauthorisedError('Email not verified');
         }
         if (user?.status === "DEACTIVATED") {
             throw new UnauthorisedError('Your account has been deactivated');
+        }
+        const userRole = await UserRole.findOne({ where: { userId: user?.externalId, roleId: roleId } });
+        
+        if (!userRole) {
+            throw new UnauthorisedError('You do not have access to this');
         }
         return {
             accessToken: this.generateAuthToken(user!)

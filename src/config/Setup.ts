@@ -26,6 +26,7 @@ import StreetClusterController from "../controller/StreetClusterController";
 import SuperAdminController from "../controller/SuperAdminController";
 import RequestStatusController from "../controller/RequestStatusController";
 import RewardTransactionController from "../controller/RewardTransactionController";
+import PublicReportController from "../controller/PublicReportController";
 
 
 export const Setup = {
@@ -68,6 +69,7 @@ export const Setup = {
             new SuperAdminController(),
             new CompanyUserController(),
             new NotificationController(),
+            new PublicReportController(),
             new RequestImageController(),
             new WasteRequestController(),
             new StreetClusterController(),
@@ -102,6 +104,7 @@ export const Setup = {
                 { method: "POST", route: "/auth/register" },
                 { method: "POST", route: "/user-role" },
                 { method: "GET", route: "/role" },
+                { method: "POST", route: "/public-report" },
             ],
             validate: (_, __: string, userDetails: BarmouryApi.UserDetails<any>) => {
                 return userDetails.getData()?.user_type === "USER" || userDetails.getData()?.projects?.includes(Setup.serviceName);
@@ -115,7 +118,7 @@ class ErrorAdviser {
 
     @ErrorAdvise({ errorNames: ["___UnknownError___"] })
     default(error: Error, options?: any) {
-        options.logger?.error(`[chat_server.ErrorAdviser] ${error.message}`, error);
+        options.logger?.error(`[ecowaste.ErrorAdviser] ${error.message}`, error);
         return new ApiResponse([options.msg || error.message]);
     }
 

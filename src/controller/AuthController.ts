@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import { randomUUID } from "crypto";
 import { Validated } from "barmoury/validation";
 import { UserService } from "../services/UserService";
+import { UnauthorisedError } from "../exceptions/UnauthorisedError";
 
 @RequestMapping({ value: "/auth", model: User })
 export default class AuthController extends Controller<User, UserRequest> {
@@ -31,16 +32,17 @@ export default class AuthController extends Controller<User, UserRequest> {
         const { id: userId } = (request as any).user;
         const user = await User.findOne({
             where: { externalId: userId },
+            attributes: { exclude: ['password'] },
         });
 
         return await this.processResponse(reply, 200, user, `Profile fetched successfully`);
     };
 
-      async getResourceById(id: any, authentication?: any): Promise<User> {
-            return this.queryArmoury.getResourceByColumn(this.t1Constructor, "externalId", id,
-                Controller.NO_RESOURCE_FORMAT_STRING.replace("${name}", this.fineName));
-        
-        }
+    async getResourceById(id: any, authentication?: any): Promise<User> {
+        return this.queryArmoury.getResourceByColumn(this.t1Constructor, "externalId", id,
+            Controller.NO_RESOURCE_FORMAT_STRING.replace("${name}", this.fineName));
+
+    }
 
 
 }
