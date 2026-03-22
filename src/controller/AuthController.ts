@@ -21,8 +21,8 @@ export default class AuthController extends Controller<User, UserRequest> {
         const requestPayload = request.body as any;
         requestPayload.password = await bcrypt.hash(requestPayload.password, 10);
         requestPayload.externalId = randomUUID();
-        const user = await User.create(requestPayload);
         await createWelcomeLink(requestPayload?.email);
+        const user = await User.create(requestPayload);
         return await this.processResponse(reply, 200, user, ` You have successfully registered! Please check your email to verify your account. `);
     };
 

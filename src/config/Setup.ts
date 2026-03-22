@@ -103,7 +103,7 @@ export const Setup = {
                 { method: "POST", route: "/auth/login" },
                 { method: "POST", route: "/auth/register" },
                 { method: "GET", route: "/auth/verify-email/:id" },
-                { method: "POST", route: "/resend-verification" },
+                { method: "POST", route: "/auth/resend-verification" },
                 { method: "POST", route: "/user-role" },
                 { method: "GET", route: "/role" },
                 { method: "POST", route: "/public-report" },
