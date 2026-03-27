@@ -1,15 +1,17 @@
 import nodemailer from 'nodemailer';
 import { createSigner } from "fast-jwt";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST, // e.g., smtp.gmail.com
+  host: process.env.SMTP_HOST || 'smtp.gmail.com', // e.g., smtp.gmail.com
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: process.env.SMTP_SECURE === 'true',
+  family: 4, // 👈 ADD THIS LINE (forces IPv4 on Render)
   auth: {
     user: process.env.SMTP_USER!,
     pass: process.env.SMTP_PASS!,
   },
-});
+} as SMTPTransport.Options );
 
 // Optional: verify once at startup
 transporter.verify((error, success) => {
@@ -31,13 +33,35 @@ export async function createWelcomeLink(email: string): Promise<void> {
 export async function sendVerificationEmail(email: string, link: string): Promise<void> {
   try {
     await transporter.sendMail({
-      from: '"Intrasoft" <info@transiflow.com>',
+      from: '"Ecowaste" <info@moelagos.gov.ng>',
       to: email,
-      subject: 'Verify your account',
-      html: `<p>Click this link to verify your Ecowaste account email: <a href="${link}">Verify Here</a></p>`,
+      subject: 'Verify your Ecowaste account',
+      text: `Verify your Ecowaste account by clicking this link: ${link}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+          <h2 style="color: #2E7D32;">Welcome to Ecowaste ♻️</h2>
+          <p>Thank you for signing up for Ecowaste.</p>
+          <p>Please click the button below to verify your email address and activate your account.</p>
+          
+          <a href="${link}" 
+             style="display: inline-block; padding: 12px 20px; margin: 20px 0; 
+                    background-color: #2E7D32; color: white; text-decoration: none; 
+                    border-radius: 5px;">
+            Verify Email
+          </a>
+
+          <p>If the button does not work, copy and paste the link below into your browser:</p>
+          <p>${link}</p>
+
+          <hr/>
+          <small>Ecowaste – Smart Waste Management for a Cleaner City</small>
+        </div>
+      `,
     });
+
     console.log(`Verification email sent to ${email}`);
   } catch (err) {
     console.error("Failed to send verification email:", err);
+    throw err;
   }
 }

@@ -15,9 +15,9 @@ export class UserService {
         if (!bcrypt.compareSync(password!, user!.password)) {
             throw new UnauthorisedError('Invalid login details');
         }
-        if (!user?.emailVerified) {
-            throw new UnauthorisedError('Email not verified');
-        }
+        // if (!user?.emailVerified) {
+        //     throw new UnauthorisedError('Email not verified');
+        // }
         if (user?.status === "DEACTIVATED") {
             throw new UnauthorisedError('Your account has been deactivated');
         }
