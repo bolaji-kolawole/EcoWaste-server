@@ -72,7 +72,7 @@ UserSubscription.init({
   id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
   userId: { type: DataTypes.STRING, allowNull: false },
   planId: { type: DataTypes.STRING, allowNull: false },
-  status: { type: DataTypes.STRING, allowNull: false, defaultValue: PaymentStatus.PENDING },
+  status: { type: DataTypes.STRING, allowNull: false, defaultValue: PaymentStatus.SUCCESSFUL },
   startDate: { type: DataTypes.DATE, allowNull: false },
   endDate: { type: DataTypes.DATE, allowNull: false },
   externalId: { type: DataTypes.STRING, allowNull: false, unique: true },

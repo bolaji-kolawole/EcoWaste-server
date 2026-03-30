@@ -116,7 +116,7 @@ Payment.init({
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: PaymentStatus.PENDING,
+    defaultValue: PaymentStatus.SUCCESSFUL,
   },
 
   extraData: {
